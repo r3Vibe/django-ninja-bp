@@ -1,10 +1,21 @@
-register ==> verify email by code ==> login ==> tokens
+use settings py
 
-register ==> tokens
+if email verification mandatory then send the verification email and return the user data
+else return the user data with tokens
 
-login ==> tokens
 
-login ==> 2fa ==> tokens
+if verification by email is enebaled then alws send an otp after login then verify and send the tokens
+else after login send the tokens
 
-forget pwd ==> code ==> reset pwd
+forget password send otp
+on verification update the password
 
+security features 
+2fa
+email verifications
+
+if enabled then after login must verify this as well
+
+implement social login
+
+otp attemps from settings

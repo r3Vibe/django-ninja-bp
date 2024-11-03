@@ -79,7 +79,6 @@ class SessionTracker(models.Model):
         ("reset", "Reset Password"),
         ("code_sent", "Code Sent"),
         ("code_verified", "Code Verified"),
-        ("active", "Active"),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sessions")
