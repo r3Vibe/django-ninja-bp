@@ -30,6 +30,32 @@ class AuthenticationController(ControllerBase, TokenObtainPairController):
 
         return 201, res
 
-    @route.post("/login", response=schema.MyTokenObtainPairOutSchema, url_name="login")
+    @route.post(
+        "/login",
+        response=schema.MyTokenObtainPairOutSchema,
+        description="Login User",
+        summary="Login User",
+    )
     def obtain_token(self, user_token: schema.MyTokenObtainPairSchema):
         return user_token.output_schema()
+
+    @route.post(
+        "/verify",
+        response={200: schema.GenericResponseSchema},
+        description="Verify Email",
+        summary="Verify Email",
+    )
+    def verify_email(self, code: schema.VerifyEmailSchema):
+        from core.models import OTPCode, SessionTracker
+
+        """
+            Get the session by session id
+            Verify the code validity
+            Check for expired code or invalid code
+            update the otp verification time and set is_verified to true
+            update the session status
+            check the attempts
+            return the response
+        """
+
+        return {"message": "ok"}

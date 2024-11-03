@@ -72,5 +72,8 @@ def send_verification_emails(sender, instance, created, **kwargs):
                 from_email=None,
                 message="",
             )
+
+            """ update the otp sent at time """
+            instance.update_otp_sent_at()
         except Exception as e:
             print(e)
