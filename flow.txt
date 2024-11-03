@@ -1,0 +1,10 @@
+register ==> verify email by code ==> login ==> tokens
+
+register ==> tokens
+
+login ==> tokens
+
+login ==> 2fa ==> tokens
+
+forget pwd ==> code ==> reset pwd
+
