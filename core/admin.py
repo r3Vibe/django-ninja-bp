@@ -7,7 +7,17 @@ from .models import EmailsAddress, SessionTracker, OTPCode
 from typing import Any
 
 
-class UserEmails(admin.TabularInline):
+from unfold.admin import ModelAdmin, TabularInline
+
+
+from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
+from django.contrib.auth.models import Group
+
+
+admin.site.unregister(Group)
+
+
+class UserEmails(TabularInline):
     model = EmailsAddress
     extra = 0
     readonly_fields = ("is_primary", "is_verified")
@@ -18,7 +28,7 @@ class UserEmails(admin.TabularInline):
 
 
 @admin.register(get_user_model())
-class UserAdmin(UserAdmin):
+class UserAdmin(UserAdmin, ModelAdmin):
     list_display = (
         "email",
         "first_name",
@@ -107,7 +117,7 @@ class UserAdmin(UserAdmin):
 
 
 @admin.register(EmailsAddress)
-class EmailsAddressAdmin(admin.ModelAdmin):
+class EmailsAddressAdmin(ModelAdmin):
     list_display = ("email", "is_primary", "is_verified", "created_at", "updated_at")
     ordering = ("email",)
     list_editable = ("is_primary", "is_verified")
@@ -137,7 +147,7 @@ class EmailsAddressAdmin(admin.ModelAdmin):
 
 
 @admin.register(SessionTracker)
-class SessionTrackerAdmin(admin.ModelAdmin):
+class SessionTrackerAdmin(ModelAdmin):
     list_display = ("user", "step", "created_at", "updated_at")
     ordering = ("user",)
     list_display_links = ("user",)
@@ -145,7 +155,7 @@ class SessionTrackerAdmin(admin.ModelAdmin):
 
 
 @admin.register(OTPCode)
-class OTPCodeAdmin(admin.ModelAdmin):
+class OTPCodeAdmin(ModelAdmin):
     list_display = (
         "session",
         "code",
@@ -158,3 +168,8 @@ class OTPCodeAdmin(admin.ModelAdmin):
     list_display_links = ("session",)
     list_filter = ("session",)
     readonly_fields = ("otp_sent_at", "otp_verified_at", "is_verified")
+
+
+@admin.register(Group)
+class GroupAdmin(BaseGroupAdmin, ModelAdmin):
+    pass
